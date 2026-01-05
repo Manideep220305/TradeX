@@ -1,0 +1,97 @@
+/* FORCE RESET */
+* { box-sizing: border-box; }
+
+/* CONTAINER */
+.sidebar {
+  height: 100vh;
+  background: #09090b; /* Solid dark color first to ensure visibility */
+  border-right: 1px solid #27272a;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  z-index: 50;
+  transition: width 0.3s ease;
+  overflow: hidden; /* Critical to stop logo overlap */
+}
+
+/* WIDTH STATES */
+.sidebar.closed { width: 80px; }
+.sidebar.open { width: 260px; }
+
+/* TOP SECTION */
+.sidebar-top {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 2;
+}
+.hamburger-btn:hover { background: #27272a; color: white; }
+
+/* LOGO FIX (Prevent Overlap) */
+.logo-container {
+  position: absolute;
+  left: 50px;
+  white-space: nowrap;
+}
+
+.full-logo { font-size: 1.5rem; font-weight: 800; color: white; }
+.mini-logo { 
+  font-size: 1.5rem; 
+  font-weight: 800; 
+  color: white; 
+  /* FORCE POSITIONING */
+  position: absolute;
+  top: 20px; 
+  left: -40px;
+}
+.green { color: #00E676; }
+
+/* NAV LINKS */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px; /* Space between logo and icons */
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  color: #a1a1aa;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.2s;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.nav-item:hover { background: #27272a; color: white; }
+.nav-item.active { background: rgba(0, 230, 118, 0.15); color: #00E676; }
+
+.icon-box {
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.label { margin-left: 12px; font-weight: 500; font-size: 0.95rem; white-space: nowrap; }
+
+/* FOOTER */
+.sidebar-footer { margin-top: auto; border-top: 1px solid #27272a; padding-top: 20px; }
+.logout-btn { color: #ef4444; width: 100%; }
+.logout-btn:hover { background: rgba(239, 68, 68, 0.1); }
