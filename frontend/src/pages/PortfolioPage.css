@@ -1,0 +1,177 @@
+/* Container for the whole page */
+.portfolio-container {
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- HEADER SECTION --- */
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-left h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(90deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-left p {
+    color: #888;
+    margin-top: 5px;
+    font-size: 0.95rem;
+}
+
+/* --- SUMMARY CARD (Total Profit) --- */
+.summary-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: right;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.summary-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.summary-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.summary-sub {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* --- TABLE SECTION --- */
+.table-panel {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden; /* Rounds the corners of the table */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.portfolio-table thead {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.portfolio-table th {
+    padding: 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #888;
+    font-weight: 600;
+}
+
+.portfolio-table td {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+}
+
+.portfolio-table tr:last-child td {
+    border-bottom: none;
+}
+
+.portfolio-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* --- TABLE CELLS --- */
+.stock-symbol {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.stock-qty {
+    color: #bbb;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.stock-price {
+    font-family: 'Roboto Mono', monospace;
+    color: #eee;
+}
+
+.stock-pl {
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Profit Colors */
+.text-green { color: #00E676; }
+.text-red { color: #FF5252; }
+.bg-green-dim { background: rgba(0, 230, 118, 0.1); color: #00E676; }
+.bg-red-dim { background: rgba(255, 82, 82, 0.1); color: #FF5252; }
+
+/* --- ACTION COLUMN (Input + Button) --- */
+.action-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.sell-input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    outline: none;
+}
+
+.sell-input:focus {
+    border-color: #FF5252;
+}
+
+.sell-btn {
+    background: #FF5252;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sell-btn:hover {
+    background: #ff1744;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+}

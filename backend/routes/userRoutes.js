@@ -1,10 +1,20 @@
-const express=require('express');
-const router=express.Router();
-//import the functions u wrote in the controller
-const{ registerUser, loginUser }=require('../controllers/userController');
+const express = require('express');
+const router = express.Router();
+const {
+    registerUser,
+    authUser,
+    getUserProfile,
+    addStockToWatchlist,
+    removeFromWatchlist
+} = require('../controllers/userController');
+const { protect } = require('../middleware/authMiddleware');
 
-//connect url to the function
-router.post('/register',registerUser);
-router.post('/login',loginUser);
+router.post('/', registerUser);
+router.post('/login', authUser);
+router.get('/profile', protect, getUserProfile);
 
-module.exports=router;
+// Watchlist Routes
+router.post('/watchlist', protect, addStockToWatchlist);
+router.delete('/watchlist/:symbol', protect, removeFromWatchlist);
+
+module.exports = router;

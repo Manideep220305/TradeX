@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import TradePage from './pages/TradePage'; // Keep using your existing file
+import TradePage from './pages/TradePage';
+import PortfolioPage from './pages/PortfolioPage'; // <--- ADDED THIS IMPORT
 
 // Components
 import Sidebar from './components/Sidebar';
@@ -50,9 +51,17 @@ function App() {
           } 
         />
         
+        {/* PORTFOLIO ROUTE (The Real Page) */}
+        <Route 
+          path="/portfolio" 
+          element={
+            <AppLayout>
+              <PortfolioPage /> 
+            </AppLayout>
+          } 
+        />
+        
         {/* SAFETY ROUTES (Placeholders for Sidebar Links) */}
-        {/* If these are missing, clicking the sidebar crashes the app */}
-        <Route path="/portfolio" element={<AppLayout><Placeholder title="Portfolio" /></AppLayout>} />
         <Route path="/transactions" element={<AppLayout><Placeholder title="Transaction History" /></AppLayout>} />
         <Route path="/ai" element={<AppLayout><Placeholder title="AI Analyst" /></AppLayout>} />
         <Route path="/pro" element={<AppLayout><Placeholder title="Pro Upgrade" /></AppLayout>} />
