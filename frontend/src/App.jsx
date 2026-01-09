@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import TradePage from './pages/TradePage';
 import PortfolioPage from './pages/PortfolioPage'; // <--- ADDED THIS IMPORT
 import TransactionsPage from './pages/TransactionsPage';
+import ChatPage from './pages/ChatPage';
 
 // Components
 import Sidebar from './components/Sidebar';
@@ -69,7 +70,7 @@ function App() {
             </AppLayout>} />
         
         
-        <Route path="/ai" element={<AppLayout><Placeholder title="AI Analyst" /></AppLayout>} />
+        <Route path="/ai" element={<AppLayout><ChatPage /></AppLayout>} />
         <Route path="/pro" element={<AppLayout><Placeholder title="Pro Upgrade" /></AppLayout>} />
 
         {/* Catch-all: Redirect /trade to /dashboard if needed */}
