@@ -1,0 +1,87 @@
+.history-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.history-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.history-header p {
+    color: #888;
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+/* TABLE STYLES */
+.history-panel {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table thead {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.history-table th {
+    padding: 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #ddd;
+    font-size: 0.95rem;
+}
+
+.history-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* BADGES */
+.type-badge {
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+
+.type-buy {
+    background: rgba(0, 230, 118, 0.15);
+    color: #00E676;
+}
+
+.type-sell {
+    background: rgba(255, 82, 82, 0.15);
+    color: #FF5252;
+}

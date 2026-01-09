@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import TradePage from './pages/TradePage';
 import PortfolioPage from './pages/PortfolioPage'; // <--- ADDED THIS IMPORT
+import TransactionsPage from './pages/TransactionsPage';
 
 // Components
 import Sidebar from './components/Sidebar';
@@ -62,7 +63,12 @@ function App() {
         />
         
         {/* SAFETY ROUTES (Placeholders for Sidebar Links) */}
-        <Route path="/transactions" element={<AppLayout><Placeholder title="Transaction History" /></AppLayout>} />
+        <Route path="/transactions" 
+          element={<AppLayout>
+             <TransactionsPage/>
+            </AppLayout>} />
+        
+        
         <Route path="/ai" element={<AppLayout><Placeholder title="AI Analyst" /></AppLayout>} />
         <Route path="/pro" element={<AppLayout><Placeholder title="Pro Upgrade" /></AppLayout>} />
 

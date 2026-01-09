@@ -157,6 +157,26 @@ const resetAccount = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+// ... existing imports and functions ...
 
-// Update exports to include resetAccount
-module.exports = { buyStock, sellStock, getPortfolio, resetAccount };
+// @desc    Get Transaction History
+// @route   GET /api/trade/history
+// @access  Private
+const getTransactions = async (req, res) => {
+    try {
+        // Find orders for this user, sorted by Newest First (-1)
+        const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch history" });
+    }
+};
+
+// Update module.exports at the very bottom
+module.exports = { 
+    buyStock, 
+    sellStock, 
+    getPortfolio, 
+    resetAccount, 
+    getTransactions // <--- Add this new one
+};
