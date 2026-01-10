@@ -1,19 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 // Pages
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import TradePage from './pages/TradePage';
-import PortfolioPage from './pages/PortfolioPage'; // <--- ADDED THIS IMPORT
+import PortfolioPage from './pages/PortfolioPage';
 import TransactionsPage from './pages/TransactionsPage';
 import ChatPage from './pages/ChatPage';
+import ProPage from './pages/proPage';
 
 // Components
 import Sidebar from './components/Sidebar';
-import './App.css'; // Global Styles
+import './App.css'; 
 
-// 1. The Layout Wrapper (This holds the Sidebar)
+// 1. The Layout Wrapper
 const AppLayout = ({ children }) => {
   return (
     <div className="app-container">
@@ -25,20 +27,39 @@ const AppLayout = ({ children }) => {
   );
 };
 
-// 2. Placeholder Component (So the app doesn't crash on empty pages)
-const Placeholder = ({ title }) => (
-  <div style={{ padding: '50px', color: 'white', textAlign: 'center' }}>
-    <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>🚧</h1>
-    <h2>{title}</h2>
-    <p style={{ color: '#888', marginTop: '10px' }}>Coming Soon</p>
-  </div>
-);
+// (Deleted the unused Placeholder component to fix the error)
 
 function App() {
   return (
     <Router>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: '#1a1a1a',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '12px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '0.95rem',
+          },
+          success: {
+            iconTheme: {
+              primary: '#00E676',
+              secondary: 'black',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#FF5252',
+              secondary: 'black',
+            },
+          },
+        }} 
+      />
+
       <Routes>
-        {/* PUBLIC ROUTES (No Sidebar) */}
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -48,12 +69,12 @@ function App() {
           path="/dashboard" 
           element={
             <AppLayout>
-              <TradePage /> 
+                <TradePage /> 
             </AppLayout>
           } 
         />
         
-        {/* PORTFOLIO ROUTE (The Real Page) */}
+        {/* PORTFOLIO ROUTE */}
         <Route 
           path="/portfolio" 
           element={
@@ -63,17 +84,20 @@ function App() {
           } 
         />
         
-        {/* SAFETY ROUTES (Placeholders for Sidebar Links) */}
+        {/* TRANSACTIONS ROUTE */}
         <Route path="/transactions" 
-          element={<AppLayout>
-             <TransactionsPage/>
-            </AppLayout>} />
+          element={
+            <AppLayout>
+              <TransactionsPage/>
+            </AppLayout>
+          } 
+        />
         
-        
+        {/* AI & PRO ROUTES */}
         <Route path="/ai" element={<AppLayout><ChatPage /></AppLayout>} />
-        <Route path="/pro" element={<AppLayout><Placeholder title="Pro Upgrade" /></AppLayout>} />
+        <Route path="/pro" element={<AppLayout><ProPage /></AppLayout>} />
 
-        {/* Catch-all: Redirect /trade to /dashboard if needed */}
+        {/* Catch-all */}
         <Route path="/trade" element={<AppLayout><TradePage /></AppLayout>} />
 
       </Routes>

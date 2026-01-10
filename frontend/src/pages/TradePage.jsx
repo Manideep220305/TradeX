@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Trade.css'; 
+import toast from 'react-hot-toast'; // ✅ Ensure this is imported
 
 // Import Components
 import Watchlist from '../components/dashboard/Watchlist';
@@ -68,23 +69,48 @@ const TradePage = () => {
     fetchRealPrice();
   }, [selectedSymbol]);
 
-  // 3. Handle Buy
+  // 3. Handle Buy (Updated with Toasts)
   const handleBuy = async (quantity) => {
-    if (!userInfo) { alert('Please Login'); return; }
+    if (!userInfo) { 
+        toast.error('Please Login first'); 
+        return; 
+    }
+    
     setLoading(true);
+    
     try {
         const config = {
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}` },
         };
+        
         const { data } = await axios.post(
             'http://localhost:3000/api/trade/buy', 
             { stockSymbol: selectedSymbol, quantity: Number(quantity) },
             config
         );
-        alert(`SUCCESS: Bought ${quantity} shares of ${selectedSymbol}`);
+
+        // ✅ SUCCESS TOAST (Replaces Alert)
+        toast.success(`Bought ${quantity} shares of ${selectedSymbol}!`, {
+            icon: '🚀',
+            duration: 4000,
+            style: {
+                background: '#1a1a1a',
+                color: '#fff',
+                border: '1px solid #00E676'
+            }
+        });
+
         setWalletBalance(prev => prev - data.order.totalAmount);
+
     } catch (error) {
-        alert(error.response?.data?.message || 'Trade Failed');
+        // ✅ ERROR TOAST (Replaces Alert)
+        toast.error(error.response?.data?.message || 'Trade Failed', {
+            style: {
+                background: '#1a1a1a',
+                color: '#fff',
+                border: '1px solid #FF5252'
+            }
+        });
     } finally {
         setLoading(false);
     }

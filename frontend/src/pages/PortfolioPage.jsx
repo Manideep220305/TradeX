@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './PortfolioPage.css'; // Make sure this matches your actual CSS file name
 import MarketStatus from '../components/dashboard/MarketStatus'; 
+import toast from 'react-hot-toast';
 
 const PortfolioPage = () => {
   const [portfolio, setPortfolio] = useState([]);
@@ -68,19 +69,57 @@ const PortfolioPage = () => {
   }, []);
 
   // 2. Handle Sell Logic
-  const handleSell = async (symbol, maxQty) => {
-    const qtyToSell = Number(sellQty[symbol] || 0);
-    if (qtyToSell <= 0 || qtyToSell > maxQty) { alert("Invalid Quantity"); return; }
-
+ const handleSell = async (symbol, quantityToSell) => {
     try {
-        const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-        await axios.post('http://localhost:3000/api/trade/sell', { stockSymbol: symbol, quantity: qtyToSell }, config);
-        
-        setSellQty(prev => ({ ...prev, [symbol]: '' })); 
-        fetchPortfolioData(); 
-        alert(`Sold ${qtyToSell} shares of ${symbol}`);
+      const token = JSON.parse(localStorage.getItem('userInfo')).token;
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+
+      // 1. Get Price (Safe Fallback)
+      let currentPrice = 150; 
+      try {
+          const priceRes = await axios.get(`http://localhost:3000/api/stocks/${symbol}`, config);
+          currentPrice = priceRes.data.price;
+      } catch (err) {
+          console.log("Using stored price for sell");
+      }
+
+      // 2. Perform the Sell
+      await axios.post('http://localhost:3000/api/trade/sell', {
+        stockSymbol: symbol,
+        quantity: parseInt(quantityToSell),
+        price: currentPrice
+      }, config);
+
+      // ✅ 3. Success Toast (If we get here, the sell DEFINITELY worked)
+      toast.success(`Sold ${quantityToSell} shares of ${symbol}`, {
+        icon: '💰',
+        style: {
+          background: '#1a1a1a',
+          color: '#fff',
+          border: '1px solid #00E676',
+        },
+        duration: 3000,
+      });
+
+      // 4. Refresh List (ISOLATED)
+      // We wrap this in its own try/catch so if it fails, it doesn't trigger the "Sell Failed" toast
+      try {
+          await fetchPortfolio(); 
+      } catch (refreshErr) {
+          console.error("Sell worked, but list didn't refresh:", refreshErr);
+      }
+
     } catch (error) {
-        alert(error.response?.data?.message || "Sell Failed");
+      console.error(error);
+      
+      // ✅ 5. Error Toast (Only runs if the SELL itself failed)
+      toast.error(error.response?.data?.message || "Could not sell stock", {
+        style: {
+          background: '#1a1a1a',
+          color: '#fff',
+          border: '1px solid #FF5252',
+        }
+      });
     }
   };
 

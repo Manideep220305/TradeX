@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/user');
+const User = require('../models/user'); // Ensure this path matches your file structure (User.js vs user.js)
 
 // Generate JWT
 const generateToken = (id) => {
@@ -9,27 +9,38 @@ const generateToken = (id) => {
 };
 
 // @desc    Register new user
-// @route   POST /api/users
+// @route   POST /api/users/register
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
+
     if (!name || !email || !password) {
         res.status(400);
         throw new Error('Please add all fields');
     }
+
+    // Check if user exists
     const userExists = await User.findOne({ email });
+
     if (userExists) {
         res.status(400);
         throw new Error('User already exists');
     }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const user = await User.create({ name, email, password: hashedPassword });
+
+    // ✅ FIXED: Removed manual hashing here.
+    // The User model's pre('save') hook handles the hashing automatically.
+    const user = await User.create({
+        name,
+        email,
+        password, // <--- Send plain password here
+    });
 
     if (user) {
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
+            walletBalance: user.walletBalance,
+            isPro: user.isPro,
             token: generateToken(user._id),
         });
     } else {
@@ -42,13 +53,17 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
+
     const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    // The matchPassword method is defined in your User model
+    if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user.id,
             name: user.name,
             email: user.email,
+            walletBalance: user.walletBalance,
+            isPro: user.isPro, // Return Pro status on login
             token: generateToken(user._id),
         });
     } else {
@@ -61,13 +76,15 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/profile
 const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
+
     if (user) {
         res.json({
             _id: user.id,
             name: user.name,
             email: user.email,
             walletBalance: user.walletBalance,
-            watchlist: user.watchlist
+            watchlist: user.watchlist,
+            isPro: user.isPro // Include this so frontend knows if user is Pro
         });
     } else {
         res.status(404);
@@ -83,6 +100,7 @@ const addStockToWatchlist = asyncHandler(async (req, res) => {
 
     if (user) {
         const alreadyAdded = user.watchlist.find(s => s.symbol === symbol);
+
         if (alreadyAdded) {
             res.status(400);
             throw new Error('Stock already in watchlist');
@@ -90,6 +108,7 @@ const addStockToWatchlist = asyncHandler(async (req, res) => {
 
         user.watchlist.push({ symbol, name });
         await user.save();
+        
         res.status(201).json(user.watchlist);
     } else {
         res.status(404);
@@ -106,6 +125,7 @@ const removeFromWatchlist = asyncHandler(async (req, res) => {
         user.watchlist = user.watchlist.filter(
             (item) => item.symbol !== req.params.symbol
         );
+        
         await user.save();
         res.json({ message: 'Stock removed' });
     } else {
