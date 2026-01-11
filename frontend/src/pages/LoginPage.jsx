@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/api/users/login', formData);
+      const res = await axios.post('https://tradex-ts78.onrender.com/api/users/login', formData);
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       navigate('/dashboard'); 
     } catch (error) {

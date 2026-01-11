@@ -27,14 +27,14 @@ const TradePage = () => {
         if (!userInfo) return;
         try {
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            const { data } = await axios.get('http://localhost:3000/api/users/profile', config);
+            const { data } = await axios.get('https://tradex-ts78.onrender.com/api/users/profile', config);
             setWalletBalance(data.walletBalance);
 
             let initialList = data.watchlist || [];
 
             const pricedList = await Promise.all(initialList.map(async (stock) => {
                 try {
-                    const res = await axios.get(`http://localhost:3000/api/stocks/${stock.symbol}`, config);
+                    const res = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${stock.symbol}`, config);
                     return { ...stock, price: res.data.price, change: res.data.change };
                 } catch (err) { 
                     return { ...stock, price: 0, change: 0 }; 
@@ -53,7 +53,7 @@ const TradePage = () => {
     const fetchRealPrice = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-        const response = await axios.get(`http://localhost:3000/api/stocks/${selectedSymbol}`, config);
+        const response = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${selectedSymbol}`, config);
         
         if (response.data && response.data.price) {
           setCurrentPrice(response.data.price);
@@ -84,7 +84,7 @@ const TradePage = () => {
         };
         
         const { data } = await axios.post(
-            'http://localhost:3000/api/trade/buy', 
+            'https://tradex-ts78.onrender.com/api/trade/buy', 
             { stockSymbol: selectedSymbol, quantity: Number(quantity) },
             config
         );

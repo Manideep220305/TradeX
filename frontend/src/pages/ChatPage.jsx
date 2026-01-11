@@ -47,7 +47,7 @@ const ChatPage = () => {
         try {
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
             
-            await axios.post('http://localhost:3000/api/payment/mock-success', {}, config);
+            await axios.post('https://tradex-ts78.onrender.com/api/payment/mock-success', {}, config);
             
             const updatedUser = { ...userInfo, isPro: true };
             localStorage.setItem('userInfo', JSON.stringify(updatedUser));
@@ -77,7 +77,7 @@ const ChatPage = () => {
         
         // --- STEP 1: GET PORTFOLIO SNAPSHOT ---
         // Fetch raw quantities
-        const portfolioRes = await axios.get('http://localhost:3000/api/trade/portfolio', config);
+        const portfolioRes = await axios.get('https://tradex-ts78.onrender.com/api/trade/portfolio', config);
         const rawPortfolio = portfolioRes.data; // This has symbol & quantity
 
         // --- STEP 2: ENRICH WITH LIVE PRICES ---
@@ -85,7 +85,7 @@ const ChatPage = () => {
         const enrichedPortfolio = await Promise.all(rawPortfolio.map(async (item) => {
             try {
                 // Fetch live price for this specific stock
-                const priceRes = await axios.get(`http://localhost:3000/api/stocks/${item.stockSymbol}`, config);
+                const priceRes = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${item.stockSymbol}`, config);
                 return { 
                     symbol: item.stockSymbol, 
                     qty: item.quantity, 
@@ -105,7 +105,7 @@ const ChatPage = () => {
 
         // --- STEP 3: SEND MESSAGE + DATA TO AI ---
         const { data } = await axios.post(
-            'http://localhost:3000/api/ai/chat', 
+            'https://tradex-ts78.onrender.com/api/ai/chat', 
             { 
               message: userMessage, 
               portfolioContext: enrichedPortfolio // <--- Sending the context

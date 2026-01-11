@@ -19,7 +19,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/users/register', formData);
+      await axios.post('https://tradex-ts78.onrender.com/api/users/register', formData);
       alert('Registration Successful! Please Login.');
       navigate('/login'); 
     } catch (error) {

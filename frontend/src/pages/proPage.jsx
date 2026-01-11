@@ -20,7 +20,7 @@ const ProPage = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
         
-        await axios.post('http://localhost:3000/api/payment/mock-success', {}, config);
+        await axios.post('https://tradex-ts78.onrender.com/api/payment/mock-success', {}, config);
 
         const updatedUser = { ...userInfo, isPro: true };
         localStorage.setItem('userInfo', JSON.stringify(updatedUser));

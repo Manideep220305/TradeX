@@ -11,7 +11,7 @@ const TransactionsPage = () => {
     const fetchHistory = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-        const { data } = await axios.get('http://localhost:3000/api/trade/history', config);
+        const { data } = await axios.get('https://tradex-ts78.onrender.com/api/trade/history', config);
         setOrders(data);
         setLoading(false);
       } catch (error) {

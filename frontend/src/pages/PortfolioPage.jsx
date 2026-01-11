@@ -71,8 +71,8 @@ const PortfolioPage = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
       
-      const { data } = await axios.get('http://localhost:3000/api/trade/portfolio', config);
-      const userRes = await axios.get('http://localhost:3000/api/users/profile', config);
+      const { data } = await axios.get('https://tradex-ts78.onrender.com/api/trade/portfolio', config);
+      const userRes = await axios.get('https://tradex-ts78.onrender.com/api/users/profile', config);
       setBalance(userRes.data.walletBalance);
 
       let totalInvested = 0;
@@ -80,7 +80,7 @@ const PortfolioPage = () => {
 
       const enrichedData = await Promise.all(data.map(async (item) => {
           try {
-              const res = await axios.get(`http://localhost:3000/api/stocks/${item.stockSymbol}`, config);
+              const res = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${item.stockSymbol}`, config);
               const currentPrice = res.data.price;
               
               const currentValue = currentPrice * item.quantity;
@@ -124,13 +124,13 @@ const PortfolioPage = () => {
 
       let currentPrice = 150; 
       try {
-          const priceRes = await axios.get(`http://localhost:3000/api/stocks/${symbol}`, config);
+          const priceRes = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${symbol}`, config);
           currentPrice = priceRes.data.price;
       } catch (err) {
           console.log("Using stored price for sell");
       }
 
-      await axios.post('http://localhost:3000/api/trade/sell', {
+      await axios.post('https://tradex-ts78.onrender.com/api/trade/sell', {
         stockSymbol: symbol,
         quantity: parseInt(quantityToSell),
         price: currentPrice

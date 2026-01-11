@@ -49,13 +49,13 @@ const Watchlist = ({ watchlist, setWatchlist, selectedSymbol, setSelectedSymbol,
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
         // Save to Database
-        await axios.post('http://localhost:3000/api/users/watchlist', {
+        await axios.post('https://tradex-ts78.onrender.com/api/users/watchlist', {
             symbol: result.symbol,
             name: result.description
         }, config);
 
         // Fetch Price from Backend
-        const res = await axios.get(`http://localhost:3000/api/stocks/${result.symbol}`, config);
+        const res = await axios.get(`https://tradex-ts78.onrender.com/api/stocks/${result.symbol}`, config);
 
         const newStock = { 
             symbol: result.symbol, 
@@ -82,7 +82,7 @@ const Watchlist = ({ watchlist, setWatchlist, selectedSymbol, setSelectedSymbol,
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
         
         // Call the new Delete Route
-        await axios.delete(`http://localhost:3000/api/users/watchlist/${symbolToRemove}`, config);
+        await axios.delete(`https://tradex-ts78.onrender.com/api/users/watchlist/${symbolToRemove}`, config);
         
         setWatchlist(prev => prev.filter(stock => stock.symbol !== symbolToRemove));
     } catch (err) {
