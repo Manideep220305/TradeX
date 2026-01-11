@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/user');
 
 // @desc    Mock Payment Success
 // @route   POST /api/payment/mock-success
