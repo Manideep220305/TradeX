@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { chatWithAI } = require('../controllers/aiController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware'); // <--- IMPORT THIS
 
-// Protected route - only logged in users can chat
+// ✅ Add 'protect' here so req.user works in the controller
 router.post('/chat', protect, chatWithAI);
 
 module.exports = router;

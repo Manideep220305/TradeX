@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config();
 const cors = require('cors');
 const connectDB = require('./config/db');
 
@@ -10,7 +11,6 @@ const stockRoutes = require('./routes/stockRoutes'); // <--- MAKE SURE THIS IS H
 const aiRoutes = require('./routes/aiRoutes'); // <--- Import this
 const paymentRoutes = require('./routes/paymentRoutes');
 
-dotenv.config();
 connectDB();
 
 const app = express();
